@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">    
+    <head>
+        <meta charset="UTF-8">
+        <title> jQuery Script Tasks</title>
+    <link rel="stylesheet" href="styles.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                p,ul,div{margin:10px 0;padding:10px;}
+                p,ul li{color:#333;}
+            }
+            ul#list {list-style: none; padding: 0;}
+            ul#list li {padding: 8px 12px; margin: 6px 0; border-radius: 4px;}
+            .item-style-1 { color: #ffffff; background: #e74c3c; font-family: 'Georgia', serif; font-style: italic; }
+            .item-style-2 { color: #0b3d91; background: #dff0ff; font-family: 'Courier New', monospace; font-weight: 700; }
+            .item-style-3 { color: #114b24; background: #e6f7ea; font-family: 'Tahoma', sans-serif; text-decoration: underline; }
+            .item-style-4 { color: #5a2a83; background: #f3e9fb; font-family: 'Verdana', sans-serif; letter-spacing: 1px; }
+            .item-style-5 { color: #222222; background: #fff3cd; font-family: 'Arial Black', Gadget, sans-serif; font-size: 1.05em; }
+
+            .boxes {display:flex; gap:20px; align-items:flex-start;}
+            .box {width:100px; height:100px; border-radius:6px;}
+            .box1 { background:#f05d07; }
+            .box2 { background:#2b8cff; }
+            .controls {display:flex; gap:10px; align-items:center;}
+            </style>
+        </head>
+    <body>
+        <h2>Append Content </h2>
+        <p id="para">This is an existing paragraph</p>
+        <ul id="list">
+            <li class="item-style-1">Item 1</li>
+            <li class="item-style-2">Item 2</li>
+        </ul>
+        <div class="controls">
+            <button id="appendBtn">Append Content (add until 5 items)</button>
+            <span id="msg" style="margin-left:8px;color:#666;font-size:0.9em"></span>
+        </div>
+        <h2>Animate Elements</h2>
+        <div class="boxes">
+            <div>
+                <div class="box box1" id="box1"></div>
+                <button id="btnBox1">Animate Box 1</button>
+            </div>
+            <div>
+                <div class="box box2" id="box2"></div>
+                <button id="btnBox2">Animate Box 2</button>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                
+                let itemCount = $('#list li').length;
+                const maxItems = 5;
+                const styleClasses = ['item-style-1','item-style-2','item-style-3','item-style-4','item-style-5'];
+
+                $('#appendBtn').click(function(){
+                    if(itemCount >= maxItems){
+                        $('#msg').text('Already 5 items — cannot append more.').css('color','darkred');
+                        return;
+                    }
+                    itemCount++;
+                    $('#para').append(` - Appended Text ${itemCount}`);
+                   
+                    const cls = styleClasses[(itemCount-1) % styleClasses.length];
+                    $('#list').append(`<li class="${cls}">Item ${itemCount}</li>`);
+                    $('#msg').text(`Appended item ${itemCount}`).css('color','green');
+                });
+                $('#btnBox1').click(function(){
+                    $('#box1').stop(true).css({width:'100px',height:'100px'}).animate({width:'160px',height:'160px'}, 600)
+                        .animate({width:'120px',height:'120px'}, 300);
+                });
+                $('#btnBox2').click(function(){
+                    $('#box2').stop(true).css({width:'100px',height:'100px'}).animate({width:'160px',height:'160px'}, 600)
+                        .animate({width:'120px',height:'120px'}, 300);
+                });
+            });
+        </script>
+    </body>
+</html>
